@@ -15,6 +15,7 @@ import com.epicodus.restaurants.models.Restaurant;
 import com.epicodus.restaurants.ui.RestaurantDetailActivity;
 import com.epicodus.restaurants.ui.RestaurantDetailFragment;
 import com.epicodus.restaurants.util.ItemTouchHelperViewHolder;
+import com.epicodus.restaurants.util.OnRestaurantSelectedListener;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -36,29 +37,33 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Vie
     @Bind(R.id.ratingTextView) TextView mRatingTextView;
     private Context mContext;
     private ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+    private Integer mPosition;
     private int mOrientation;
+    private OnRestaurantSelectedListener mRestaurantSelectedListener;
 
-    public RestaurantViewHolder(View itemView, ArrayList<Restaurant> restaurants) {
+    public RestaurantViewHolder(View itemView, ArrayList<Restaurant> restaurants, OnRestaurantSelectedListener restaurantSelectedListener) {
         super(itemView);
         mContext = itemView.getContext();
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(this);
         mRestaurants = restaurants;
+        mRestaurantSelectedListener = restaurantSelectedListener;
     }
 
     @Override
     public void onClick(View v) {
-        int currentPosition = getLayoutPosition();
+        mPosition = getLayoutPosition();
 
         if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mRestaurantSelectedListener.onRestaurantSelected(mPosition, mRestaurants);
             RestaurantDetailFragment detailFragment = RestaurantDetailFragment
-                    .newInstance(mRestaurants.get(currentPosition));
+                    .newInstance(mRestaurants.get(mPosition));
             FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.restaurantDetailContainer, detailFragment);
             ft.commit();
         } else {
             Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
-            intent.putExtra("position", currentPosition + "");
+            intent.putExtra("position", mPosition.toString());
             intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
             mContext.startActivity(intent);
         }

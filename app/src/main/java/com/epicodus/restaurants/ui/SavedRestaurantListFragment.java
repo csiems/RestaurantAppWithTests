@@ -1,6 +1,7 @@
 package com.epicodus.restaurants.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.epicodus.restaurants.MyRestaurantsApplication;
 import com.epicodus.restaurants.R;
 import com.epicodus.restaurants.adapters.FirebaseRestaurantListAdapter;
 import com.epicodus.restaurants.models.Restaurant;
+import com.epicodus.restaurants.util.OnRestaurantSelectedListener;
 import com.epicodus.restaurants.util.OnStartDragListener;
 import com.epicodus.restaurants.util.SimpleItemTouchHelperCallback;
 import com.firebase.client.Firebase;
@@ -31,11 +33,22 @@ public class SavedRestaurantListFragment extends Fragment implements OnStartDrag
     private String mCurrentUserUid;
     private FirebaseRestaurantListAdapter mAdapter;
     private ItemTouchHelper mItemTouchHelper;
+    OnRestaurantSelectedListener mRestaurantSelectedListener;
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 
     public SavedRestaurantListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mRestaurantSelectedListener = (OnRestaurantSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + e.getMessage());
+        }
     }
 
     @Override
@@ -61,7 +74,7 @@ public class SavedRestaurantListFragment extends Fragment implements OnStartDrag
     }
 
     private void setUpRecyclerView(ViewGroup container) {
-        mAdapter = new FirebaseRestaurantListAdapter(mQuery, Restaurant.class, this);
+        mAdapter = new FirebaseRestaurantListAdapter(mQuery, Restaurant.class, this, mRestaurantSelectedListener);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);

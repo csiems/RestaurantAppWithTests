@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/fragmentItemsList"
-        android:name="com.epicodus.restaurants.ui.RestaurantListFragment"
+        class="com.epicodus.restaurants.ui.RestaurantListFragment"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="3"

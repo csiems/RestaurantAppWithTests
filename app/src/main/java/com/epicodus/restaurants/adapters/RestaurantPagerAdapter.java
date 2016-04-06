@@ -28,6 +28,9 @@ public class RestaurantPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
+        if (mRestaurants == null) {
+            return 0;
+        }
         return mRestaurants.size();
     }
 
