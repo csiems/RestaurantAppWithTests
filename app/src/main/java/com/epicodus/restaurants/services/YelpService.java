@@ -1,6 +1,7 @@
 package com.epicodus.restaurants.services;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.epicodus.restaurants.R;
 import com.epicodus.restaurants.models.Restaurant;
@@ -88,8 +89,10 @@ public class YelpService {
                 }
             }
         } catch (IOException e) {
+
             e.printStackTrace();
         } catch (JSONException e) {
+
             e.printStackTrace();
         }
         return restaurants;

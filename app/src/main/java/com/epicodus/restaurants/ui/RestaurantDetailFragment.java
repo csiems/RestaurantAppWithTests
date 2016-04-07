@@ -98,7 +98,7 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
         if (v == mSaveRestaurantButton) {
             mFirebaseRef.child("restaurants/" + mCurrentUserUid + "/"
                     + mRestaurant.getName()).setValue(mRestaurant);
-            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.savedToastMessage, Toast.LENGTH_SHORT).show();
         }
     }
 }
