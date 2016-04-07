@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Restaurants</string>
+    <string name="app_name">MyRestaurants</string>
     <string name="action_settings">Settings</string>
     <string name="consumer_key">g8bL1c7TVg4wcHQatpEmPQ</string>
     <string name="consumer_secret">yX77UfbLF7LXk6nStzidsHF7muk</string>

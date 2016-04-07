@@ -32,7 +32,7 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Vie
     private static final int MAX_WIDTH = 200;
     private static final int MAX_HEIGHT = 200;
     @Bind(R.id.restaurantImageView) ImageView mRestaurantImageView;
-    @Bind(R.id.restaurantNameTextView) TextView mNameTextView;
+    @Bind(R.id.restaurantDetailNameTextView) TextView mNameTextView;
     @Bind(R.id.categoryTextView) TextView mCategoryTextView;
     @Bind(R.id.ratingTextView) TextView mRatingTextView;
     private Context mContext;

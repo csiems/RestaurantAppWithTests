@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.epicodus.restaurants.MyRestaurantsApplication;
 import com.epicodus.restaurants.R;
@@ -35,16 +36,15 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class RestaurantListFragment extends Fragment {
-    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+    @Bind(R.id.recyclerView)
+    RecyclerView mRecyclerView;
     private RestaurantListAdapter mAdapter;
-    private ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+    public ArrayList<Restaurant> mRestaurants = new ArrayList<>();
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private String mRecentAddress;
     private Firebase mFirebaseRef;
     OnRestaurantSelectedListener mOnRestaurantSelectedListener;
-
-    public RestaurantListFragment() {}
 
     @Override
     public void onAttach(Context context) {
@@ -68,7 +68,8 @@ public class RestaurantListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
         ButterKnife.bind(this, view);
-        mSharedPreferences = view.getContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        mSharedPreferences = view.getContext().getSharedPreferences(getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE);
         mRecentAddress = mSharedPreferences.getString("location", null);
         mEditor = mSharedPreferences.edit();
         if (mRecentAddress != null) {
@@ -95,7 +96,6 @@ public class RestaurantListFragment extends Fragment {
                 return false;
             }
         });
-
     }
 
     @Override
@@ -123,7 +123,7 @@ public class RestaurantListFragment extends Fragment {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 mRestaurants = yelpService.processResults(response);
 
                 getActivity().runOnUiThread(new Runnable() {
@@ -132,6 +132,7 @@ public class RestaurantListFragment extends Fragment {
                         mAdapter = new RestaurantListAdapter(mRestaurants, mOnRestaurantSelectedListener);
                         mRecyclerView.setAdapter(mAdapter);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
                     }

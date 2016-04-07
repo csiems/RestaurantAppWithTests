@@ -27,7 +27,7 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     private static final int MAX_WIDTH = 400;
     private static final int MAX_HEIGHT = 300;
     @Bind(R.id.restaurantImageView) ImageView mImageLabel;
-    @Bind(R.id.restaurantNameTextView) TextView mNameLabel;
+    @Bind(R.id.restaurantDetailNameTextView) TextView mNameLabel;
     @Bind(R.id.cuisineTextView) TextView mCategoriesLabel;
     @Bind(R.id.ratingTextView) TextView mRatingLabel;
     @Bind(R.id.websiteTextView) TextView mWebsiteLabel;

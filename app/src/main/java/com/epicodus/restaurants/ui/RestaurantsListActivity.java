@@ -19,25 +19,32 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 
 
-public class RestaurantsListActivity extends FragmentActivity implements OnRestaurantSelectedListener{
-    private static final String TAG = RestaurantsListActivity.class.getSimpleName();
+public class RestaurantsListActivity extends AppCompatActivity implements OnRestaurantSelectedListener {
+    public static final String TAG = RestaurantsListActivity.class.getSimpleName();
     private Integer mPosition;
     ArrayList<Restaurant> mRestaurants;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("TESTING", TAG + " I've CREATED!" + this.toString());
-        if (savedInstanceState != null) {
+        int size;
+
+        try {
+            ArrayList<Restaurant> restaurants = Parcels.unwrap(savedInstanceState.getParcelable("restaurants"));
+            size = restaurants.size();
+        } catch (NullPointerException npe) {
+            size = -1;
+        }
+
+        if (savedInstanceState != null && size > -1) {
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                 mPosition = savedInstanceState.getInt("position");
                 mRestaurants = Parcels.unwrap(savedInstanceState.getParcelable("restaurants"));
-                if (mRestaurants != null) {
-                    Intent intent = new Intent(this, RestaurantDetailActivity.class);
-                    intent.putExtra("position", mPosition.toString());
-                    intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(this, RestaurantDetailActivity.class);
+                intent.putExtra("position", mPosition.toString());
+                intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
+                startActivity(intent);
             }
         }
         setContentView(R.layout.activity_restaurants);
@@ -58,39 +65,4 @@ public class RestaurantsListActivity extends FragmentActivity implements OnResta
         mRestaurants = restaurants;
     }
 
-    @Override
-    protected void onStop() {
-        Log.d("TESTING", TAG + " I've STOPPED!" + this.toString());
-        super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        Log.d("TESTING", TAG + " I've RESUMED!" + this.toString());
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.d("TESTING", TAG + " I've PAUESED!" + this.toString());
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d("TESTING", TAG + " I've DESTROYED!" + this.toString());
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onRestart() {
-        Log.d("TESTING", TAG + " I've RESTARED!" + this.toString());
-        super.onRestart();
-    }
-
-    @Override
-    protected void onStart() {
-        Log.d("TESTING", TAG + " I've STRATED!" + this.toString());
-        super.onStart();
-    }
 }
